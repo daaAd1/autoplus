@@ -1,0 +1,29 @@
+.CarCard {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+
+  border: 1px solid #dae0e5;
+  border-radius: 8px;
+  margin-bottom: 10px;
+
+  -webkit-box-shadow: 2px 2px 2px 0px #dae0e5;
+  -moz-box-shadow: 2px 2px 2px 0px #dae0e5;
+  box-shadow: 2px 2px 2px 0px#dae0e5;
+}
+
+.CarCard:hover {
+  -webkit-box-shadow: 5px 5px 5px 0px #dae0e5;
+  -moz-box-shadow: 5px 5px 5px 0px #dae0e5;
+  box-shadow: 5px 5px 5px 0px#dae0e5;
+}
+
+.CarCard-img {
+  max-width: 300px;
+  max-height: 150px;
+  margin: 10px;
+}
+
+.CarCard-price {
+}

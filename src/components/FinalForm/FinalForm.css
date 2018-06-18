@@ -1,0 +1,73 @@
+.FinalForm {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.FinalForm > label {
+  width: 200px;
+  padding: 20px 0px 0px 0px;
+}
+
+.FinalForm > label > input {
+  border-radius: 4px;
+  border: 1px solid #dae0e5;
+  padding: 5px;
+  margin-top: 8px;
+}
+
+.FinalForm-pickup-h2 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.FinalForm-pickup-radio {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.FinalForm-pickup-radio {
+  display: flex;
+  flex-flow: column wrap;
+  text-align: left;
+}
+
+.FinalForm-pickup-radiolabel {
+  padding-bottom: 5px;
+  font-size: 15px;
+}
+
+.FinalForm-pickup-radio input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  border-radius: 8px;
+  border: 2px solid black;
+  width: 16px;
+  height: 16px;
+  transition: 0.2s all linear;
+  outline: none;
+  position: relative;
+  top: 4px;
+  margin: 5px 5px 0px 0px;
+  padding: 0px;
+}
+
+.FinalForm-pickup-radio input:checked {
+  border: 6px solid black;
+}
+
+.FinalForm-button {
+  margin: 20px 0px;
+  padding: 10px;
+  width: 100px;
+  border: 1px solid black;
+  border-radius: 8px;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+}
+
+.FinalForm-button:hover {
+  background-color: black;
+  color: white;
+}
