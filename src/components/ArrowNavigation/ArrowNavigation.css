@@ -1,0 +1,112 @@
+.ArrowNavigation {
+  width: 80%;
+  margin: 0 auto;
+  text-align: right;
+}
+
+.ArrowNavigation-button {
+  min-width: 64px;
+  height: 36px;
+
+  padding: 0px 16px;
+  margin: 20px 5px;
+
+  vertical-align: middle;
+  font-size: 14px;
+  font-weight: 600;
+
+  background-color: #3949ab;
+  color: white;
+
+  border: 0;
+  border-radius: 8px;
+  outline: none;
+
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+
+  position: relative;
+  overflow: hidden;
+}
+
+.ArrowNavigation-button:hover,
+.ArrowNavigation-button:focus {
+  background-color: #283593;
+
+  cursor: pointer;
+}
+
+.ArrowNavigation-button:focus {
+  background-color: #5c6bc0;
+}
+
+.ArrowNavigation-button:disabled {
+  background-color: lightgray;
+  font-weight: 400;
+  color: gray;
+}
+
+.ArrowNavigation-button:disabled:hover,
+.ArrowNavigation-button:disabled:focus {
+  cursor: initial;
+}
+
+.ArrowNavigation-back-button {
+  padding: 0px 8px;
+
+  background-color: white;
+  color: #3949ab;
+
+  box-shadow: 0px 0px;
+}
+
+.ArrowNavigation-back-button:hover,
+.ArrowNavigation-back-button:focus {
+  background-color: #c5cae9;
+}
+
+.ArrowNavigation-back-button:disabled {
+  background-color: white;
+  color: lightgray;
+}
+
+.ArrowNavigation-back-button:disabled:hover,
+.ArrowNavigation-back-button:disabled:focus {
+  background-color: white;
+}
+
+/* 
+Material design press animation 
+*/
+.ArrowNavigation-button:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%);
+  transform-origin: 50% 50%;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 1;
+  }
+  20% {
+    transform: scale(25, 25);
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(40, 40);
+  }
+}
+
+.ArrowNavigation-button:focus:not(:active)::after {
+  animation: ripple 1s ease-out;
+}

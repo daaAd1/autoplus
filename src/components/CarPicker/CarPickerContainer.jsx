@@ -7,7 +7,7 @@ class CarPickerContainer extends React.Component {
     return (
       <div className="CarPickerContainer">
         <div>
-          <h1 className="CarPickerContainer-h1">Car</h1>
+          <h1 className="CarPickerContainer-h1">Select car</h1>
           <CarPicker />
         </div>
       </div>
