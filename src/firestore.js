@@ -1,10 +1,21 @@
 import { firestore } from './firebase';
 
-const addCarToCollection = (name, price) => firestore.collection('cars').add({ name, price });
+const addCarToCollection = (name, description, price) =>
+  firestore
+    .collection('cars')
+    .doc(name)
+    .set({ name, description, price });
+
 const addImgToCollection = (name, key) =>
   firestore
     .collection('img')
     .doc(name)
-    .set({ count: key });
+    .set({ count: Number(key) + 1 });
 
-export default { addCarToCollection, addImgToCollection };
+const getCarImageCount = (name) =>
+  firestore
+    .collection('img')
+    .doc(name)
+    .get();
+
+export default { addCarToCollection, addImgToCollection, getCarImageCount };

@@ -4,22 +4,26 @@ import CarAdder from './CarAdder';
 import firestore from '../../firestore';
 import storage from '../../storage';
 
+const INITIAL_STATE = {
+  name: '',
+  description: '',
+  price: '',
+  images: [],
+  isLoading: false,
+  error: '',
+};
+
 class CarAdderContainer extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      name: '',
-      price: '',
-      image: {},
-      isLoading: false,
-      error: '',
-    };
+    this.state = INITIAL_STATE;
 
     this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handlePriceChange = this.handlePriceChange.bind(this);
     this.addNewCar = this.addNewCar.bind(this);
-    this.selectImage = this.selectImage.bind(this);
+    this.selectImages = this.selectImages.bind(this);
   }
 
   setErrorMessageAndTurnOffLoader(message) {
@@ -35,6 +39,12 @@ class CarAdderContainer extends React.Component {
     });
   }
 
+  handleDescriptionChange(value) {
+    this.setState({
+      description: value,
+    });
+  }
+
   handlePriceChange(value) {
     this.setState({
       price: value,
@@ -42,41 +52,80 @@ class CarAdderContainer extends React.Component {
   }
 
   addNewCar() {
-    const { name, price, image } = this.state;
-    firestore.addImgToCollection(name, '1');
-
     this.setState({
       isLoading: true,
     });
+    this.addDataToFirestoreAndStorage();
+  }
+
+  addDataToFirestoreAndStorage() {
+    const { name, description, price } = this.state;
     firestore
-      .addCarToCollection(name, price)
+      .addCarToCollection(name, description, price)
       .then(() => {
-        storage
-          .uploadCarImage(name, 'abc', image)
-          .then(() => {
-            this.setState({
-              name: '',
-              price: '',
-              isLoading: false,
-            });
-          })
-          .catch((error) => {
-            this.setErrorMessageAndTurnOffLoader(error.message);
-          });
+        this.uploadAllImagesToStorage();
       })
       .catch((error) => {
         this.setErrorMessageAndTurnOffLoader(error.message);
       });
   }
 
-  selectImage(image) {
+  uploadAllImagesToStorage() {
+    const { name, images } = this.state;
+    let key = 0;
+    firestore
+      .getCarImageCount(name)
+      .then((snapshot) => {
+        if (snapshot.data() !== undefined) {
+          key = snapshot.data().count;
+        }
+        images.forEach((image) => {
+          this.addImgCountToFirestore(image, key);
+          key += 1;
+        });
+      })
+      .catch((error) => {
+        this.setErrorMessageAndTurnOffLoader(error.message);
+      });
+  }
+
+  addImgCountToFirestore(image, key) {
+    const { name } = this.state;
+    firestore
+      .addImgToCollection(name, key)
+      .then(() => {
+        this.uploadImgToStorage(image, key);
+      })
+      .catch((error) => {
+        this.setErrorMessageAndTurnOffLoader(error.message);
+      });
+  }
+
+  uploadImgToStorage(image, key) {
+    const { name } = this.state;
+    storage
+      .uploadCarImage(name, key + 1, image)
+      .then(() => {
+        this.setInitialState();
+      })
+      .catch((error) => {
+        this.setErrorMessageAndTurnOffLoader(error.message);
+      });
+  }
+
+  setInitialState() {
+    this.setState(INITIAL_STATE);
+  }
+
+  selectImages(images) {
     this.setState({
-      image,
+      images,
     });
   }
 
   render() {
-    const { name, price, isLoading, error } = this.state;
+    const { name, description, price, images, isLoading, error } = this.state;
+
     return (
       <div className="CarAdderContainer">
         <div>
@@ -85,11 +134,14 @@ class CarAdderContainer extends React.Component {
           {!isLoading ? (
             <CarAdder
               name={name}
+              description={description}
               price={price}
+              images={images}
               addNewCar={this.addNewCar}
-              onPriceChange={this.handlePriceChange}
               onNameChange={this.handleNameChange}
-              selectImage={this.selectImage}
+              onDescriptionChange={this.handleDescriptionChange}
+              onPriceChange={this.handlePriceChange}
+              selectImages={this.selectImages}
             />
           ) : (
             <div className="CarAdderContainer-loader">Loading...</div>

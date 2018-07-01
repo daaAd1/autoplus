@@ -1,8 +1,9 @@
 import React from 'react';
+import ImageUploader from 'react-images-upload';
 import './CarAdder.css';
 
 const CarAdder = (props) => {
-  const { name, price } = props;
+  const { name, description, price, image } = props;
   return (
     <div className="CarAdder">
       <h1 className="CarAdder-h1">Car properties</h1>
@@ -16,6 +17,16 @@ const CarAdder = (props) => {
           value={name}
         />
       </label>
+      <label htmlFor="description">
+        Description
+        <input
+          onChange={(event) => props.onDescriptionChange(event.target.value)}
+          type="text"
+          name="description"
+          id="description"
+          value={description}
+        />
+      </label>
       <label htmlFor="price">
         Price
         <input
@@ -26,17 +37,14 @@ const CarAdder = (props) => {
           value={price}
         />
       </label>
-      <div>
-        <button type="button">Upload car image</button>
-        <input
-          onChange={(event) => props.selectImage(event.target.files[0])}
-          type="file"
-          accept="image/*"
-          name="image"
-          className="CarAdder-uploadInput"
-        />
-      </div>
-
+      <ImageUploader
+        withIcon
+        buttonText="Upload one or more car images"
+        onChange={(images) => props.selectImages(images)}
+        imgExtension={['.jpg', '.gif', '.png', '.gif']}
+        maxFileSize={5242880}
+        withPreview
+      />
       <button disabled={name === '' || price === ''} type="button" onClick={props.addNewCar}>
         Add new car
       </button>
