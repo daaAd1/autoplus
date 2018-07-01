@@ -17,16 +17,21 @@ class CarPickerContainer extends React.Component {
     this.fetchData();
   }
 
+  componentWillUnmount() {
+    this.isCancelled = true;
+  }
+
   fetchData() {
-    firestore.listenToAllCarsChanges().onSnapshot((collection) => {
+    firestore.accessToCarCollection().onSnapshot((collection) => {
       const carList = [];
       collection.forEach((doc) => {
         carList.push(doc.data());
       });
-      this.setState({
-        carList,
-        isDataLoaded: true,
-      });
+      !this.isCancelled &&
+        this.setState({
+          carList,
+          isDataLoaded: true,
+        });
     });
   }
 

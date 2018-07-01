@@ -8,6 +8,7 @@ import AdditionalOptionsContainer from './components/AdditionalOptionsPicker/Add
 import FinalFormContainer from './components/FinalForm/FinalFormContainer';
 import routes from './routes';
 import ArrowNavigationContainer from './components/ArrowNavigation/ArrowNavigationContainer';
+import CarAdderContainer from './components/CarAdder/CarAdderContainer';
 
 const propTypes = {
   carRentProperties: PropTypes.shape({
@@ -57,6 +58,7 @@ const App = (props) => {
               path={routes.FINAL_FORM}
               component={() => <FinalFormContainer onFormUnmount={props.onFormUnmount} />}
             />
+            <Route exact path={routes.CAR_ADDER} component={() => <CarAdderContainer />} />
             <Redirect to={routes.TIME_PICKER} />
           </Switch>
         </div>

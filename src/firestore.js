@@ -1,6 +1,10 @@
-import firestore from './firebase';
+import { firestore } from './firebase';
 
-const onceGetAllCars = () => firestore.collection('cars').get();
-const listenToAllCarsChanges = () => firestore.collection('cars');
+const addCarToCollection = (name, price) => firestore.collection('cars').add({ name, price });
+const addImgToCollection = (name, key) =>
+  firestore
+    .collection('img')
+    .doc(name)
+    .set({ count: key });
 
-export default { onceGetAllCars, listenToAllCarsChanges };
+export default { addCarToCollection, addImgToCollection };
